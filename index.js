@@ -13,6 +13,8 @@ app.listen(app.get('port'), () => {
     console.log(`app escuchando en el puerto ${app.get('port')}`);
 });
 
+app.get("/", (req, res) => res.send("MyPokefavs"));
+
 app.get('/favorites', async (req, res) => {
     let db;
     try {
