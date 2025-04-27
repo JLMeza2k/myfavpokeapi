@@ -74,7 +74,20 @@ app.get('/users', async (req, res) => {
     }
 });
 
-
+app.post('/users', async (req, res) => {
+    let db;
+    try {
+        db = await connect();
+        const { username, nombre, apellido, email, password, activo } = req.body;
+        const query = `INSERT INTO users (username, nombre, apellido, email, password, activo) VALUES ('${username}', '${nombre}', '${apellido}', '${email}', '${password}', ${activo})`;    
+        const [result] = await db.execute(query);
+        res.json({ message: `Usuario ${username} agregado` });
+    } catch(err) {
+        res.json({ message: 'Ocurrió un error al agregar el usuario' });
+    } finally {
+        if (db) await db.end();
+    }
+});
 
 
 
