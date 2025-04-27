@@ -60,6 +60,19 @@ app.delete('/favorites', async (req, res) => {
 });
 
 
+app.get('/users', async (req, res) => {
+    let db;
+    try {
+        db = await connect();
+        const [rows] = await db.query('SELECT * FROM users');
+        res.json(rows);
+    } catch(err) {
+        console.error('Ocurrió un error al obtener los usuarios');
+        res.json({ error: 'Ocurrió un error al obtener los usuarios' });
+    } finally {
+        if (db) await db.end();
+    }
+});
 
 
 
